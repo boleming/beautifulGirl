@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>萌妹</title>
+		<style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			.imgbox{
+				display: flex;
+				margin: 10px auto 20px;
+				border: 2px solid #000;
+				align-items: center;
+				width: 80%;
+				height: 80%;
+			}
+			.title{
+				width: 200px;
+				height: 60px;
+				margin: 10px auto;
+				background-image: linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%);
+				text-align: center;
+				line-height: 60px;
+				font-size: 30px;
+				border-radius: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$.ajax({
+				//请求方式
+				type: 'GET',
+				async: false,
+				//发送请求的地址以及传输的数据
+				url: 'https://www.mxnzp.com/api/image/girl/list/random',
+				//服务器返回的数据类型
+				dataType: 'json',
+				success: function(data) {
+					imgData = data.data;
+				},
+				error: function(jqXHR) {
+					//请求失败函数内容
+				}
+			});
+			var str = "<div class='title'>点我换图</div>";
+			for (var i = 0; i < imgData.length; i++) {
+				str += `<img class="imgbox" src="${imgData[i].imageUrl}" alt="">`
+			}
+			document.querySelector("body").innerHTML = str
+			$("body").click(function() {
+				$.ajax({
+					//请求方式
+					type: 'GET',
+					//发送请求的地址以及传输的数据
+					url: 'https://www.mxnzp.com/api/image/girl/list/random',
+					//服务器返回的数据类型
+					dataType: 'json',
+					success: function(data) {
+						var imgData = data.data;
+						var imgList = {};
+						for (var key in imgData) {
+							imgList[key] = imgData[key];
+						}
+						var str = "<div class='title'>点我换图</div>";
+						for (var i = 0; i < imgData.length; i++) {
+							str += `<img class="imgbox" src="${imgData[i].imageUrl}" alt="">`
+						}
+						document.querySelector("body").innerHTML = str;
+					},
+					error: function(jqXHR) {
+						//请求失败函数内容
+					}
+				});
+			})
+		</script>
+	</body>
+</html>
